@@ -1,0 +1,6 @@
+[worldserver]
+
+# Enable or disable the Mall Teleport Module
+# Default: 1 (Enabled)
+#          0 (Disabled)
+MallTeleport.Enable = 1
