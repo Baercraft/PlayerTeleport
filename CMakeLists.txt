@@ -1,9 +1,7 @@
-CU_SET_PATH("CMAKE_MALL_TELEPORT_DIR" "${CMAKE_CURRENT_LIST_DIR}")
-
-AC_ADD_SCRIPT("${CMAKE_CURRENT_LIST_DIR}/src/mod-mall-teleport.cpp")
-
-AC_ADD_SCRIPT_LOADER("MallTeleport"      "${CMAKE_CURRENT_LIST_DIR}/src/loader.h")
-
-CU_ADD_HOOK(AFTER_WORLDSERVER_CMAKE "${CMAKE_CURRENT_LIST_DIR}/src/cmake/after_ws_install.cmake")
+# Modern AzerothCore module loader: source files are discovered automatically.
+# Keep UTF-8 explicitly enabled for MSVC because this module contains multilingual text.
+if (MSVC)
+    set_source_files_properties("${CMAKE_CURRENT_LIST_DIR}/src/mod-mall-teleport.cpp" PROPERTIES COMPILE_OPTIONS "/utf-8")
+endif()
 
 message("-- Mall Teleport CONFIGURED --")

@@ -1,6 +1,6 @@
 void AddMallTeleportScripts();
 
-void Addmod_mall_teleportScripts()
+void AddPlayerTeleportScripts()
 {
     AddMallTeleportScripts();
 }

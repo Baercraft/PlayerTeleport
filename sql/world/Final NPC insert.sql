@@ -11,7 +11,15 @@ USE `acore_world`;
 -- --------------------------------------------------------------------
 DELETE FROM `smart_scripts` WHERE `entryorguid` IN (991105, 991106, 991107, 991108) AND `source_type` = 0;
 DELETE FROM `gossip_menu` WHERE `MenuID` IN (991105, 991106, 991107, 991108);
+
+-- Verwaiste Conditions aus frueheren DB-Gossip-Versionen entfernen.
+-- SourceType 14 = gossip_menu, SourceType 15 = gossip_menu_option.
+-- Die aktuellen NPCs bauen ihre Gossip-Menues ausschliesslich im C++ Script auf.
+DELETE FROM `conditions`
+WHERE `SourceTypeOrReferenceId` IN (14, 15)
+  AND `SourceGroup` IN (991105, 991106, 991107, 991108);
 DELETE FROM `gossip_menu_option` WHERE `MenuID` IN (991105, 991106, 991107, 991108);
+DELETE FROM `creature_template_locale` WHERE `entry` IN (991105, 991106, 991107, 991108);
 DELETE FROM `creature_template` WHERE `entry` IN (991105, 991106, 991107, 991108);
 DELETE FROM `creature_template_model` WHERE `CreatureID` IN (991105, 991106, 991107, 991108);
 
@@ -22,8 +30,8 @@ DELETE FROM `creature_template_model` WHERE `CreatureID` IN (991105, 991106, 991
 -- NPC 991105: Kodo (Geheime Festung Teleporter)
 INSERT INTO `creature_template` SET
     `entry` = 991105,
-    `name` = 'Geheimnisvoller Kodo',
-    `subname` = 'Zur Geheimen Festung',
+    `name` = 'Mysterious Kodo',
+    `subname` = 'To the Secret Fortress',
     `minlevel` = 80,
     `maxlevel` = 80,
     `faction` = 35,
@@ -33,8 +41,8 @@ INSERT INTO `creature_template` SET
 -- NPC 991106: Rückkehr-NPC (Bringt den Spieler an den Ursprungsort)
 INSERT INTO `creature_template` SET
     `entry` = 991106,
-    `name` = 'Heimkehrer',
-    `subname` = 'Rückkehr-Portal',
+    `name` = 'Returner',
+    `subname` = 'Return Portal',
     `minlevel` = 80,
     `maxlevel` = 80,
     `faction` = 35,
@@ -44,8 +52,8 @@ INSERT INTO `creature_template` SET
 -- NPC 991107: Mystischer Teleporter (10 verborgene Orte)
 INSERT INTO `creature_template` SET
     `entry` = 991107,
-    `name` = 'Der Weltenwanderer',
-    `subname` = 'Mystischer Teleporter',
+    `name` = 'The Worldwalker',
+    `subname` = 'Mystic Teleporter',
     `minlevel` = 80,
     `maxlevel` = 80,
     `faction` = 35,
@@ -56,12 +64,43 @@ INSERT INTO `creature_template` SET
 INSERT INTO `creature_template` SET
     `entry` = 991108,
     `name` = 'Lord Aurelius',
-    `subname` = 'VIP Meister',
+    `subname` = 'VIP Master',
     `minlevel` = 80,
     `maxlevel` = 80,
     `faction` = 35,
     `npcflag` = 1,
     `ScriptName` = 'npc_vip_master';
+
+-- Localized NPC names/titles. English is stored in creature_template as fallback.
+INSERT INTO `creature_template_locale` (`entry`, `locale`, `Name`, `Title`) VALUES
+(991105, 'deDE', 'Geheimnisvoller Kodo', 'Zur Geheimen Festung'),
+(991105, 'frFR', 'Kodo mystérieux', 'Vers la Forteresse Secrète'),
+(991105, 'esES', 'Kodo misterioso', 'A la Fortaleza Secreta'),
+(991105, 'esMX', 'Kodo misterioso', 'A la Fortaleza Secreta'),
+(991105, 'ruRU', 'Таинственный кодо', 'В Тайную крепость'),
+(991105, 'zhCN', '神秘的科多兽', '前往秘密要塞'),
+(991105, 'zhTW', '神秘的科多獸', '前往秘密要塞'),
+(991106, 'deDE', 'Heimkehrer', 'Rückkehr-Portal'),
+(991106, 'frFR', 'Guide du retour', 'Portail de retour'),
+(991106, 'esES', 'Retornador', 'Portal de regreso'),
+(991106, 'esMX', 'Retornador', 'Portal de regreso'),
+(991106, 'ruRU', 'Возвращающий', 'Портал возвращения'),
+(991106, 'zhCN', '归返者', '返回传送门'),
+(991106, 'zhTW', '歸返者', '返回傳送門'),
+(991107, 'deDE', 'Der Weltenwanderer', 'Mystischer Teleporter'),
+(991107, 'frFR', 'Le Marchemonde', 'Téléporteur mystique'),
+(991107, 'esES', 'El Caminamundos', 'Teletransportador místico'),
+(991107, 'esMX', 'El Caminamundos', 'Teletransportador místico'),
+(991107, 'ruRU', 'Странник миров', 'Мистический телепорт'),
+(991107, 'zhCN', '世界行者', '神秘传送师'),
+(991107, 'zhTW', '世界行者', '神秘傳送師'),
+(991108, 'deDE', 'Lord Aurelius', 'VIP Meister'),
+(991108, 'frFR', 'Lord Aurelius', 'Maître VIP'),
+(991108, 'esES', 'Lord Aurelius', 'Maestro VIP'),
+(991108, 'esMX', 'Lord Aurelius', 'Maestro VIP'),
+(991108, 'ruRU', 'Лорд Аурелиус', 'VIP-мастер'),
+(991108, 'zhCN', '奥雷利乌斯领主', 'VIP管理员'),
+(991108, 'zhTW', '奧雷利烏斯領主', 'VIP管理員');
 
 -- --------------------------------------------------------------------
 -- 3. MODELLE UND SKALIERUNG (DisplayScale = 1.0)
